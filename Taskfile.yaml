@@ -1,0 +1,25 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  run:watch:
+    desc: 🚀 watch ids
+    cmds:
+      - cargo watch -c -x "run -- --version"
+
+  build:watch:
+    desc: 🚀 watch ids «build»
+    cmds:
+      - cargo watch -c -x "build"
+
+  build:
+    desc: ⚡ build ids «release»
+    cmds:
+      - cargo build --release
+      - python check_size.py
+
+  fmt:
+    desc: 🚀 format ids
+    cmds:
+      - cargo +nightly fmt --all
