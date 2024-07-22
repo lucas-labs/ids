@@ -4,3 +4,7 @@ chain_width = 100
 comment_width = 80
 imports_indent = "Block"
 imports_granularity = "One"
+empty_item_single_line = true
+fn_single_line = false
+struct_lit_single_line = true
+fn_call_width = 80

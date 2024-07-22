@@ -3,15 +3,10 @@
 version: '3'
 
 tasks:
-  run:watch:
-    desc: 🚀 watch ids
+  dev:
+    desc: 👨🏻‍💻 run ids in «dev» mode
     cmds:
-      - cargo watch -c -x "run -- --version"
-
-  build:watch:
-    desc: 🚀 watch ids «build»
-    cmds:
-      - cargo watch -c -x "build"
+      - cargo watch -c -x "run --"
 
   build:
     desc: ⚡ build ids «release»
@@ -20,6 +15,28 @@ tasks:
       - python check_size.py
 
   fmt:
-    desc: 🚀 format ids
+    desc: 🎨 format ids
     cmds:
       - cargo +nightly fmt --all
+  
+  fmt:check:
+    desc: 🎨 check ids formatting
+    cmds:
+      - cargo +nightly fmt --all --check
+
+  lint:
+    desc: 🧶 lint ids
+    cmds:
+      - cargo clippy --fix --workspace --allow-staged
+  
+  lint:check:
+    desc: 🧶 check ids linting
+    cmds:
+      - cargo clippy --workspace
+
+  fmt+lint:
+    desc: 🎨🧶 format and lint ids
+    cmds:
+      - task fmt
+      - git add .
+      - task lint

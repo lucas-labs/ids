@@ -50,6 +50,7 @@ for key, exe in files.items():
 
         fmt = bad if diff > 10 else good
 
+        print(f'{key}: {fmt(diff_str)} (prev: {old_size}kb, now: {new_size}kb)')
         sizefile.parent.mkdir(parents=True, exist_ok=True)
 
         with open(sizefile, 'w') as f:

@@ -9,9 +9,10 @@
             // allows to run the command in the terminal for development purposes
             "PATH": "${workspaceFolder}/target/debug;${env:PATH}",
         },
-        "lucodear-icons.activeIconPack": "rust_ferris",
+        "lucodear-icons.activeIconPack": "rust_ferris_minimal",
         "lucodear-icons.folders.associations": {
             ".cargo": "rust",
+            "actions": "subcommand"
         },
         "lucodear-icons.files.associations": {
         
