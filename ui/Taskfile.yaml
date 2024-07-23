@@ -1,0 +1,7 @@
+version: 3
+
+tasks:
+  build:
+    desc: ⚡ build ui «release»
+    cmds:
+      - echo "placeholder for build command"

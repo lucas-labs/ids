@@ -1,0 +1,23 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "server"
+path = "src/lib.rs"
+
+[dependencies]
+eyre = { workspace = true, default-features = false }
+lool = { workspace = true }
+cli = { path = "../cli" }
+rouille = "3.6.2"
+rust-embed = "8.5.0"
+filetime = "0.2"
+time = "0.3.36"
+indoc = "2.0.5"
+notify = "6.1.1"
+notify-debouncer-mini = "0.4.1"
+ctrlc = "3.4.4"
+crossbeam-channel = "0.5.13"

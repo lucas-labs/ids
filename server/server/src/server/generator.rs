@@ -31,8 +31,10 @@ impl Server {
                 let file_name = file.path.file_name();
                 // insert each file in /svg/<dir>/<file>
                 let path = format!("svg/{}/{}", dir, file_name.unwrap().to_str().unwrap());
-                let content = std::fs::read(file.path).unwrap();
-                files.push((path, content));
+
+                if let Ok(content) = std::fs::read(file.path) {
+                    files.push((path, content));
+                }
             }
         }
 

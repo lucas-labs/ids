@@ -1,21 +1,35 @@
 {
     "files.exclude": {
+        // -----------------------
+        // ===========> 🖥️ server
+        // -----------------------
+        
         // ⚙️ config
-        "Taskfile.yaml": true,
-        "coco.yml": true,
-        ".task": true,
+        // "server/.task": true,
 
         // 📦
-        "Cargo.lock": true,
-        "target": true,
+        // "server/Cargo.lock": true,
+        // "server/target": true,
+        
 
+        // ===========> 📲 client
+
+
+        
+        // -----------------------
+        // ===========> 🌱 root
+        // -----------------------
+        
+        // ⚙️ config
+        // "coco.yml": true,
+        
         // 📝 readmes
         "**/**/README.md": true,
         "LICENSE": true,
 
         // 🗑️
         "*.code-workspace": true,
-        ".gitignore": true,
+        // ".gitignore": true,
         ".vscode": true,
         ".git": true,
     },

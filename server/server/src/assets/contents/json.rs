@@ -8,7 +8,7 @@
 
 use std::path::PathBuf;
 
-use cli::git::{GitFileStatus, OrganizedStatus};
+use cli::git::{GitFileStatus, GitStatus, OrganizedStatus};
 
 const NAME: &str = "contents.json";
 
@@ -30,6 +30,8 @@ pub fn generate(status: &[OrganizedStatus], link_prefix: &str) -> (String, Vec<u
         let files = status
             .files
             .iter()
+            // filter out those files with deleted status
+            .filter(|file| !matches!(file.status, GitStatus::Deleted))
             .map(|file| parse_git_file_status(file, link_prefix))
             .collect::<Vec<String>>()
             .join(",\n");

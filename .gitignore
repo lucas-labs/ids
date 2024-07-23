@@ -1,3 +1,7 @@
-/target
-.data/*.log
-.task
+**/target
+**/.data/*.log
+**/.task
+
+# moon
+.moon/cache
+.moon/docker

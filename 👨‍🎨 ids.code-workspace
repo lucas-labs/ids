@@ -17,6 +17,12 @@
         },
         "lucodear-icons.files.associations": {
         
+        },
+        "yaml.schemas": {
+            "https://moonrepo.dev/schemas/workspace.json": ".moon/workspace.yml",
+            "https://moonrepo.dev/schemas/toolchain.json": ".moon/toolchain.yml",
+            "https://moonrepo.dev/schemas/project.json": "moon.yml",
+
         }
     }
 }
