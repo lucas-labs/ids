@@ -8,12 +8,13 @@ use {
 pub enum Action {
     Help,
     Version,
-    Server(PathBuf),
+    Server(PathBuf, u32, String),
 }
 
 pub fn get_action() -> Result<(Action, Vec<OsString>)> {
     let mut arguments = Arguments::from_env();
 
+    // check if wants help
     if arguments.contains(["-h", "--help"]) {
         return Ok((Action::Help, arguments.finish()));
     }
@@ -25,6 +26,10 @@ pub fn get_action() -> Result<(Action, Vec<OsString>)> {
 
     let curr_dir = current_dir()?;
     let dir_opt: Option<String> = arguments.opt_value_from_str(["-d", "--dir"])?;
+
+    let port: u32 = arguments.opt_value_from_str(["-p", "--port"])?.unwrap_or(8788);
+    let host: String =
+        arguments.opt_value_from_str(["-h", "--host"])?.unwrap_or("localhost".into());
 
     let rest = arguments.finish();
 
@@ -41,5 +46,5 @@ pub fn get_action() -> Result<(Action, Vec<OsString>)> {
         None => curr_dir,
     };
 
-    Ok((Action::Server(std::path::absolute(cwd)?), rest))
+    Ok((Action::Server(std::path::absolute(cwd)?, port, host), rest))
 }

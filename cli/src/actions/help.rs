@@ -1,8 +1,11 @@
-use lool::{cli::stylize::Stylize, s};
+use {
+    crate::print,
+    lool::{cli::stylize::Stylize, s},
+};
 
 /// prints the help message of the CLI tool
 pub fn show() {
-    print_logo();
+    print::logo();
 
     print_section("usage", vec![("ids", Some("[options] [args...]"), None)]);
     println!(
@@ -16,6 +19,8 @@ pub fn show() {
         vec![
             ("--help, -h", None, Some("show this help message and exit")),
             ("--version, -v", None, Some("show version information")),
+            ("--port, -v", None, Some("set the port to run the server on (defaults to 8788)")),
+            ("--host, -h", None, Some("set the host to run the server on")),
             (
                 "--dir, -d",
                 None,
@@ -25,14 +30,9 @@ pub fn show() {
     );
 }
 
-fn print_logo() {
-    println!("{}", "  ╭".white().bold());
-    println!("{}", " { }".white().bold());
-    println!();
-}
-
 /// prints a section with a title and a list of tuples with the following format:
 /// (name/command, aliases<opt>, description<opt>)
+#[inline]
 fn print_section(title: &str, contents: Vec<(&str, Option<&str>, Option<&str>)>) {
     println!("{}", title.blue().bold());
 

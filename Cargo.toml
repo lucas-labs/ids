@@ -2,7 +2,7 @@
 resolver = "2"
 package = { authors = ["lucas@lucode.ar"] }
 default-members = ["app"]
-members = ["app", "cli"]
+members = ["app", "cli", "server"]
 
 [profile.release]
 strip = true

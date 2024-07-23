@@ -12,7 +12,7 @@ path = "src/main.rs"
 # workspace deps
 eyre = { workspace = true, default-features = false }
 cli = { path = "../cli" }
-rouille = "3.6.2"
+server = { path = "../server" }
 lool = { workspace = true }
 
 [build-dependencies]

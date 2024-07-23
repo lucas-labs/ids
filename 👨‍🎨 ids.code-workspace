@@ -12,7 +12,8 @@
         "lucodear-icons.activeIconPack": "rust_ferris_minimal",
         "lucodear-icons.folders.associations": {
             ".cargo": "rust",
-            "actions": "subcommand"
+            "actions": "subcommand",
+            "http": "client"
         },
         "lucodear-icons.files.associations": {
         
