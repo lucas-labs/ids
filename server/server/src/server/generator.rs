@@ -15,7 +15,7 @@ impl Server {
         let runtime_assets = self.runtime_assets.clone();
 
         // get status from git
-        let status = cli::git::status(&self.cfg.path, Some(vec![".svg"]));
+        let status = cli::git::status(&self.repo_path, Some(vec![".svg"]));
         cli::print::git_status(&status);
 
         let (json_path, json_content) = contents::json::generate(
@@ -26,13 +26,11 @@ impl Server {
         let mut files = vec![];
 
         for group in status {
-            let dir = group.dir;
             for file in group.files {
-                let file_name = file.path.file_name();
                 // insert each file in /svg/<dir>/<file>
-                let path = format!("svg/{}/{}", dir, file_name.unwrap().to_str().unwrap());
+                let path = format!("svg/{}", file.link.to_str().unwrap());
 
-                if let Ok(content) = std::fs::read(file.path) {
+                if let Ok(content) = std::fs::read(file.path.clone()) {
                     files.push((path, content));
                 }
             }

@@ -3,7 +3,10 @@ use {
     cli::{git, print, CliConfig},
     crossbeam_channel::{select, unbounded, Receiver, Sender},
     lool::{cli::stylize::Stylize, s},
-    std::sync::{Arc, Mutex},
+    std::{
+        path::PathBuf,
+        sync::{Arc, Mutex},
+    },
 };
 
 mod generator;
@@ -12,16 +15,18 @@ mod watcher;
 
 pub struct Server {
     cfg: CliConfig,
+    repo_path: PathBuf,
     runtime_assets: Arc<Mutex<RuntimeAssets>>,
     runtime_assets_prefix: String,
 }
 
 impl Server {
-    pub fn create(cfg: CliConfig) -> Self {
+    pub fn create(cfg: CliConfig, repo_path: PathBuf) -> Self {
         let runtime_assets_prefix = s!("/_ids_runtime");
 
         Self {
             cfg,
+            repo_path,
             runtime_assets: Arc::new(Mutex::new(RuntimeAssets::create(&runtime_assets_prefix))),
             runtime_assets_prefix,
         }
@@ -78,13 +83,13 @@ impl Server {
 
 /** Create a new server instance and start it */
 pub fn start(config: CliConfig) {
-    // ensure the given path is a git repository
-    if !git::is_inside_repo(&config.path) {
+    // ensure the given path is in a git repository
+    if let Ok(repo_path) = git::get_repo_top_level(&config.path) {
+        let server = Server::create(config, repo_path);
+        server.start();
+    } else {
         eprintln!("{} » the given path is not a git repository!", "error".red().bold());
         eprintln!("{} {}", "path:".yellow(), config.path.display());
         std::process::exit(1);
     }
-
-    let server = Server::create(config);
-    server.start();
 }

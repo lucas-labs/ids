@@ -6,7 +6,8 @@
 //! It's just simple wrapper around some git cli commands.
 
 use {
-    lool::{cli::stylize::Stylize, s},
+    eyre::Result,
+    lool::{cli::stylize::Stylize, fail, s},
     std::{
         fmt::Display,
         path::{Path, PathBuf},
@@ -66,15 +67,20 @@ impl Display for OrganizedStatus {
 }
 
 /// Check if the given path is a git repository
-pub fn is_inside_repo(path: &PathBuf) -> bool {
+pub fn get_repo_top_level(path: &PathBuf) -> Result<PathBuf> {
     let output = std::process::Command::new("git")
         .arg("rev-parse")
-        .arg("--is-inside-work-tree")
+        .arg("--show-toplevel")
         .current_dir(path)
         .output()
         .expect("Failed to check if path is a git repository");
 
-    output.status.success()
+    if output.status.success() {
+        let output = String::from_utf8(output.stdout).expect("Failed to parse git output");
+        Ok(PathBuf::from(output.trim()))
+    } else {
+        fail!("{} is not in a git repo", path.display())
+    }
 }
 
 /// Get the current branch of the repository
