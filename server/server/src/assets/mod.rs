@@ -8,8 +8,8 @@ pub mod contents {
 
 use rust_embed::Embed;
 
-pub use {matching::get, runtime_assets::RuntimeAssets};
+pub use {matching::*, runtime_assets::RuntimeAssets};
 
 #[derive(Embed)]
-#[folder = "../public"]
+#[folder = "../../ui/dist"]
 struct Public;

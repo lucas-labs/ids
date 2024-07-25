@@ -24,15 +24,23 @@ impl Server {
         self.log_url();
 
         // spawn and run the http server in a new thread
-        let host = self.host.clone();
-        let port = self.port;
+        let host = self.cfg.host.clone();
+        let port = self.cfg.port;
         let runtime_assets = self.runtime_assets.clone();
+        let spa = self.cfg.spa;
+        let serve_ui = self.cfg.serve_ui;
 
-        spawn(move || http(host, port, runtime_assets));
+        spawn(move || http(host, port, runtime_assets, spa, serve_ui));
     }
 }
 
-fn http(host: String, port: u32, runtime_assets: Arc<Mutex<RuntimeAssets>>) {
+fn http(
+    host: String,
+    port: u32,
+    runtime_assets: Arc<Mutex<RuntimeAssets>>,
+    spa: bool,
+    serve_ui: bool,
+) {
     let url = format!("{}:{}", host, port);
     let prefix = {
         let runtime_assets = runtime_assets.lock().unwrap();
@@ -56,9 +64,11 @@ fn http(host: String, port: u32, runtime_assets: Arc<Mutex<RuntimeAssets>>) {
             }
         }
 
-        let response = assets::get(request);
-        if response.is_success() {
-            return response;
+        if serve_ui {
+            let response = assets::get(request, spa);
+            if response.is_success() {
+                return response;
+            }
         }
 
         rouille::Response::empty_404()

@@ -21,6 +21,8 @@ pub fn show() {
             ("--version, -v", None, Some("show version information")),
             ("--port, -v", None, Some("set the port to run the server on (defaults to 8788)")),
             ("--host, -h", None, Some("set the host to run the server on")),
+            ("--no-spa", None, Some("deactivate SPA (single page application) beahvior")),
+            ("--no-ui", None, Some("do not serve the UI")),
             (
                 "--dir, -d",
                 None,

@@ -1,12 +1,9 @@
 use {
     crate::assets::RuntimeAssets,
-    cli::{git, print},
+    cli::{git, print, CliConfig},
     crossbeam_channel::{select, unbounded, Receiver, Sender},
     lool::{cli::stylize::Stylize, s},
-    std::{
-        path::PathBuf,
-        sync::{Arc, Mutex},
-    },
+    std::sync::{Arc, Mutex},
 };
 
 mod generator;
@@ -14,28 +11,24 @@ mod http;
 mod watcher;
 
 pub struct Server {
-    path: PathBuf,
-    port: u32,
-    host: String,
+    cfg: CliConfig,
     runtime_assets: Arc<Mutex<RuntimeAssets>>,
     runtime_assets_prefix: String,
 }
 
 impl Server {
-    pub fn create(path: PathBuf, port: u32, host: String) -> Self {
+    pub fn create(cfg: CliConfig) -> Self {
         let runtime_assets_prefix = s!("/_ids_runtime");
 
         Self {
-            path,
-            port,
-            host,
+            cfg,
             runtime_assets: Arc::new(Mutex::new(RuntimeAssets::create(&runtime_assets_prefix))),
             runtime_assets_prefix,
         }
     }
 
     pub fn log_url(&self) {
-        let url = format!("http://{}:{}", self.host, self.port).green();
+        let url = format!("http://{}:{}", self.cfg.host, self.cfg.port).green();
         println!("» Serving {} on {}", "ids".magenta().bold(), url);
     }
 
@@ -84,14 +77,14 @@ impl Server {
 }
 
 /** Create a new server instance and start it */
-pub fn start(path: PathBuf, port: u32, host: String) {
+pub fn start(config: CliConfig) {
     // ensure the given path is a git repository
-    if !git::is_inside_repo(&path) {
+    if !git::is_inside_repo(&config.path) {
         eprintln!("{} » the given path is not a git repository!", "error".red().bold());
-        eprintln!("{} {}", "path:".yellow(), path.display());
+        eprintln!("{} {}", "path:".yellow(), config.path.display());
         std::process::exit(1);
     }
 
-    let server = Server::create(path, port, host);
+    let server = Server::create(config);
     server.start();
 }

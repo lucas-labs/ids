@@ -7,10 +7,11 @@ pub mod actions {
 }
 
 mod shared {
+    pub mod config;
     pub mod print;
     pub mod versioning_data;
 }
 
 pub mod git;
 
-pub use shared::{print, versioning_data::*};
+pub use shared::{config::*, print, versioning_data::*};

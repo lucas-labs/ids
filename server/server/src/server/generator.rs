@@ -15,7 +15,7 @@ impl Server {
         let runtime_assets = self.runtime_assets.clone();
 
         // get status from git
-        let status = cli::git::status(&self.path, Some(vec![".svg"]));
+        let status = cli::git::status(&self.cfg.path, Some(vec![".svg"]));
         cli::print::git_status(&status);
 
         let (json_path, json_content) = contents::json::generate(

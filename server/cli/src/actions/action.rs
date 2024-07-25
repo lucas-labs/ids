@@ -1,14 +1,14 @@
 use {
+    crate::shared::config::CliConfig,
     eyre::Result,
     pico_args::Arguments,
     std::{env::current_dir, ffi::OsString, path::PathBuf},
 };
 
-#[derive(Debug)]
 pub enum Action {
     Help,
     Version,
-    Server(PathBuf, u32, String),
+    Server(CliConfig),
 }
 
 pub fn get_action() -> Result<(Action, Vec<OsString>)> {
@@ -31,6 +31,12 @@ pub fn get_action() -> Result<(Action, Vec<OsString>)> {
     let host: String =
         arguments.opt_value_from_str(["-h", "--host"])?.unwrap_or("localhost".into());
 
+    // spa: defaults to true, if --no-spa is passed, it will be false
+    let spa: bool = !arguments.contains("--no-spa");
+
+    // serve_ui: defaults to true, if --no-ui is passed, it will be false
+    let serve_ui: bool = !arguments.contains("--no-ui");
+
     let rest = arguments.finish();
 
     // cwd is dir_opt if it exists, otherwise curr_dir
@@ -46,5 +52,13 @@ pub fn get_action() -> Result<(Action, Vec<OsString>)> {
         None => curr_dir,
     };
 
-    Ok((Action::Server(std::path::absolute(cwd)?, port, host), rest))
+    let config = CliConfig {
+        path: std::path::absolute(cwd)?,
+        port,
+        host,
+        spa,
+        serve_ui,
+    };
+
+    Ok((Action::Server(config), rest))
 }
