@@ -2,6 +2,21 @@ version: 3
 
 tasks:
   build:
-    desc: ⚡ build ui «release»
+    desc: ⚡ build ui
     cmds:
-      - echo "placeholder for build command"
+      - bun vite build
+
+  dev:
+    desc: 🚀 start dev server
+    cmds:
+      - bun vite --clearScreen false
+
+  preview:
+    desc: 🎉 preview ui
+    cmds:
+      - bun vite preview
+
+  lint:
+    desc: 🧹 lint ui
+    cmds:
+      - bun biome lint

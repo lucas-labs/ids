@@ -1,10 +1,36 @@
 version: 3
 
+output: prefixed
+
 includes:
   server:
     taskfile: server
     dir: server
 
-  client:
+  ui:
     taskfile: ui
     dir: ui
+
+tasks:
+  compile:
+    desc:  ⚡ build the whole project
+    summary: |
+      Build the server and the ui in production mode.
+
+      It will buil the ui first, then the server; this will ensure that the server build process
+      can embed the ui into the binary.
+    cmds:
+      - task ui:build
+      - task server:build
+
+  serve:
+    desc: 🛠️ run ui-less server and ui in dev mode
+    
+    summary: |
+      Run the server without serving the ui, and the ui as a standalone process in dev mode.
+      This is useful for when we want to work on the ui while having hot-reloading, etc. but
+      we also need the servers watcher/api to be up and running.
+    deps:
+      - server:dev:no-ui
+      - ui:dev
+      

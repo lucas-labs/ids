@@ -1,7 +1,22 @@
+# rust
 **/target
 **/.data/*.log
 **/.task
 
-# moon
-.moon/cache
-.moon/docker
+# Logs
+*.log
+
+# node
+**/node_modules
+**/dist
+**/dist-ssr
+**/*.local
+
+# editor
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

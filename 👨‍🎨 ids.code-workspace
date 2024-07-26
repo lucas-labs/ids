@@ -7,7 +7,7 @@
     "settings": {
         "terminal.integrated.env.windows": {
             // allows to run the command in the terminal for development purposes
-            "PATH": "${workspaceFolder}/target/debug;${env:PATH}",
+            "PATH": "${workspaceFolder}/server/target/debug;${env:PATH}"
         },
         "lucodear-icons.activeIconPack": "rust_ferris_minimal",
         "lucodear-icons.folders.associations": {
@@ -15,14 +15,27 @@
             "actions": "subcommand",
             "http": "client"
         },
-        "lucodear-icons.files.associations": {
-        
-        },
+        "lucodear-icons.files.customClones": [
+            {
+                "base": "taskfile",
+                "color": "deep-purple-500",
+                "name": "ui-taskfile",
+                "fileNames": ["ui/TaskFile.yaml"]
+            },
+            {
+                "base": "taskfile",
+                "color": "amber-800",
+                "name": "server-taskfile",
+                "fileNames": ["server/TaskFile.yaml"]
+            }
+        ],
         "yaml.schemas": {
             "https://moonrepo.dev/schemas/workspace.json": ".moon/workspace.yml",
             "https://moonrepo.dev/schemas/toolchain.json": ".moon/toolchain.yml",
-            "https://moonrepo.dev/schemas/project.json": "moon.yml",
-
+            "https://moonrepo.dev/schemas/project.json": "moon.yml"
+        },
+        "explorer.fileNesting.patterns": {
+            "*.tsx": "${capture}.ts,${capture}.css,${capture}.module.css",
         }
     }
 }

@@ -1,0 +1,18 @@
+@tailwind base;
+
+@layer base {
+    html {
+        @apply bg-zinc-950 text-zinc-200 min-h-[100vh];
+    }
+
+    body {
+        @apply min-h-[100vh];
+    }
+
+    #app {
+        @apply h-full flex flex-col min-h-[100vh];
+    }
+}
+
+@tailwind components;
+@tailwind utilities;
