@@ -1,9 +1,7 @@
 use {
+    super::{resp, Public},
     rouille::{Request, Response},
-    std::path::Path,
 };
-
-use super::{mime::extension_to_mime, Public};
 
 pub fn get(request: &Request, spa: bool) -> Response {
     let mut url = request.url();
@@ -24,16 +22,11 @@ pub fn get(request: &Request, spa: bool) -> Response {
             // if spa is enabled, serve the index.html file if the file is not found
             if spa {
                 let index = Public::get("index.html").unwrap().data;
-                Response::from_data("text/html", index)
+                resp::from_data("text/html", index)
             } else {
-                Response::empty_404()
+                resp::not_found()
             }
         }
-        Some(file) => {
-            let extension = Path::new(url.as_str()).extension().and_then(|s| s.to_str());
-            let file = file.data;
-
-            Response::from_data(extension_to_mime(extension), file)
-        }
+        Some(file) => resp::from_file(file, url),
     }
 }

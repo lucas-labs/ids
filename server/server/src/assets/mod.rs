@@ -1,5 +1,5 @@
 mod matching;
-mod mime;
+pub mod resp;
 mod runtime_assets;
 
 pub mod contents {

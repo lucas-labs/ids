@@ -11,6 +11,8 @@ use std::{
     thread::spawn,
 };
 
+use crate::assets::resp;
+
 use {
     crate::{
         assets::{self, RuntimeAssets},
@@ -55,12 +57,11 @@ fn http(
             if let Ok(runtime_assets) = runtime_assets {
                 let file = runtime_assets.get(request.url());
                 match file {
-                    Some(file) => return rouille::Response::from_data(file.mime, file.content),
-                    None => return rouille::Response::empty_404(),
+                    Some(file) => return resp::from_data(file.mime, file.content),
+                    None => return resp::not_found(),
                 }
             } else {
-                return rouille::Response::text("error aquiring runtime assets")
-                    .with_status_code(500);
+                return resp::err("error aquiring runtime assets", 500);
             }
         }
 
@@ -71,7 +72,7 @@ fn http(
             }
         }
 
-        rouille::Response::empty_404()
+        resp::not_found()
     });
 }
 

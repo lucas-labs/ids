@@ -1,39 +1,94 @@
 {
     "files.exclude": {
-        // -----------------------
-        // ===========> 🖥️ server
-        // -----------------------
-        
+        // 📚 projects
+        "ui": false,
+        "server": false,
+
+        // 📦 packages, build, etc
+        "**/Taskfile.yaml": true,
+        "**/node_modules": true,
+        "**/Cargo.lock": true,
+        "**/bun.lockb": true,
+        "**/target": true,
+        "**/dist": true,
+
         // ⚙️ config
-        // "server/.task": true,
+        "coco.yml": true,
+        "**/vite.config.ts": true,
+        "**/tsconfig.json": true,
 
-        // 📦
-        // "server/Cargo.lock": true,
-        // "server/target": true,
-        
-
-        // ===========> 📲 client
-
-
-        
-        // -----------------------
-        // ===========> 🌱 root
-        // -----------------------
-        
-        // ⚙️ config
-        // "coco.yml": true,
-        
-        // 📝 readmes
-        "**/**/README.md": true,
+        // 📝 docs
+        "README.md": true,
         "LICENSE": true,
 
         // 🗑️
         "*.code-workspace": true,
-        // ".gitignore": true,
+        ".gitignore": true,
+        ".gitattributes": true,
         ".vscode": true,
         ".git": true,
+        "**/.task": true,
+
+        // 🎨 formatting / linting
+        "**/biome.jsonc": true,
+
+        // -----------------------
+        // ===========> 🖥️ server
+        // -----------------------
+
+        "server/app": false,
+        "server/cli": false,
+        "server/server": false,
+        "server/public": false,
+
+        // -----------------------
+        // ===========> 📲 ui
+        // -----------------------
+
+        "ui/postcss.config.*": true
     },
+
     "[rust]": {
         "editor.formatOnSave": true
+    },
+    "[css]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "[json]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[jsonc]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome"
     }
 }

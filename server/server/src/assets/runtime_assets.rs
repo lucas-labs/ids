@@ -5,7 +5,7 @@
 //! that contains the current changes in the repository. But it was made to be generic so that it
 //! can be used to store any asset that is created at runtime in the future.
 
-use {super::mime, std::collections::HashMap};
+use {super::resp, std::collections::HashMap};
 
 #[derive(Clone)]
 pub struct Asset {
@@ -53,7 +53,7 @@ impl RuntimeAssets {
             path.clone(),
             Asset {
                 content,
-                mime: mime::extension_to_mime(extension.as_deref()).to_string(),
+                mime: resp::extension_to_mime(extension.as_deref()).to_string(),
                 date_modified: time::OffsetDateTime::now_utc().unix_timestamp(),
             },
         );
