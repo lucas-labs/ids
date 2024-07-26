@@ -5,10 +5,10 @@ default-members = ["app"]
 members = ["app", "cli", "server"]
 
 [profile.release]
-strip = true
-lto = true
+strip = "symbols"
+lto = "fat"
 codegen-units = 1
-opt-level = 'z'
+opt-level = "z"
 panic = "abort"
 rpath = false
 overflow-checks = false
@@ -23,4 +23,4 @@ lool = { git = "https://github.com/lucodear/lool", version = "0.3.2", features =
     "macros",
     "cli.stylize",
 ] }
-pico-args = "0.5.0"
+

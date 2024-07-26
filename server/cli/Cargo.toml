@@ -10,5 +10,5 @@ path = "src/lib.rs"
 
 [dependencies]
 eyre = { workspace = true, default-features = false }
-pico-args = {workspace = true}
 lool = {workspace = true}
+pico-args = "0.5.0"

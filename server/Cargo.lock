@@ -1037,7 +1037,6 @@ dependencies = [
  "crossbeam-channel",
  "ctrlc",
  "eyre",
- "filetime",
  "indoc",
  "lool",
  "notify",
