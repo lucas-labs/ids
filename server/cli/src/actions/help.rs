@@ -9,7 +9,7 @@ pub fn show() {
 
     print_section("usage", vec![("ids", Some("[options] [args...]"), None)]);
     println!(
-        "\n{} {} helps you visualize your icons during development\n",
+        "\n{} {} helps you visualize icons you modified\nor added to a git repository during development\n",
         "ids".bold(),
         "(icons dev server)".italic()
     );

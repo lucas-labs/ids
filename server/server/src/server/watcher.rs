@@ -25,7 +25,7 @@ impl Server {
     pub(crate) fn start_watcher(&self) -> Receiver<()> {
         let (snd, recv) = unbounded();
 
-        let path = self.cfg.path.clone();
+        let path = self.repo_path.clone();
         spawn(move || watch(path, snd));
 
         recv

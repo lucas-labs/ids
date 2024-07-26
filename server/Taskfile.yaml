@@ -6,8 +6,18 @@ tasks:
     cmds:
       - cargo watch -c -x "run --"
 
+  dev:no-ui:
+    desc: 👨🏻‍💻 run ids in «dev» mode without the ui
+    cmds:
+      - cargo watch -c -x "run -- --no-ui"
+
   build:
     desc: ⚡ build ids «release»
+    cmds:
+      - cargo build --release
+
+  build:check:
+    desc: ⚡ build ids «release» and check the size
     cmds:
       - cargo build --release
       - python check_size.py
