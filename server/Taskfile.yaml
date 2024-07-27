@@ -48,3 +48,18 @@ tasks:
       - task fmt
       - git add .
       - task lint
+
+  release:patch:
+    desc: 🚀 release ids
+    cmds:
+      - cargo release patch --execute --no-confirm --package ids
+
+  release:minor:
+    desc: 🚀 release ids
+    cmds:
+      - cargo release minor --execute --no-confirm --package ids
+
+  release:major:
+    desc: 🚀 release ids
+    cmds:
+      - cargo release major --execute --no-confirm --package ids

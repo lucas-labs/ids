@@ -3,6 +3,8 @@ name = "ids"
 description = "👨🏻‍🎨 » icons preview development server"
 version = "0.0.0"
 edition = "2021"
+repository = "https://github.com/lucas-labs/ids"
+homepage = "https://github.com/lucas-labs/ids"
 
 [[bin]]
 name = "ids"
