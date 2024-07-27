@@ -1,13 +1,24 @@
 import { IconCard } from '@cmp/icon-card.cmp';
 import { useStore } from '@nanostores/preact';
+import { useEffect } from 'preact/hooks';
+import { useWs } from '../hooks/use-ws.hook';
 import { $contentsStore } from '../stores/contents.store';
+
+const BASE_URL = import.meta.env.IDS_SERVER_URL;
 
 export function Home() {
     const { data: contents } = useStore($contentsStore);
+    const message = useWs(`${BASE_URL}_ids_runtime/ws`.replace('http', 'ws'));
 
     if (!contents) {
         return <></>;
     }
+
+    useEffect(() => {
+        if (message.payload === 'R') {
+            $contentsStore.revalidate();
+        }
+    }, [message]);
 
     return (
         <div class='flex flex-col gap-12'>

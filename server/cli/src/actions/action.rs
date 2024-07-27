@@ -29,7 +29,7 @@ pub fn get_action() -> Result<(Action, Vec<OsString>)> {
 
     let port: u32 = arguments.opt_value_from_str(["-p", "--port"])?.unwrap_or(8788);
     let host: String =
-        arguments.opt_value_from_str(["-h", "--host"])?.unwrap_or("localhost".into());
+        arguments.opt_value_from_str(["-h", "--host"])?.unwrap_or("127.0.0.1".into());
 
     // spa: defaults to true, if --no-spa is passed, it will be false
     let spa: bool = !arguments.contains("--no-spa");

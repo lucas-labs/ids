@@ -18,8 +18,8 @@
         "**/tsconfig.json": true,
 
         // 📝 docs
-        "README.md": true,
-        "LICENSE": true,
+        // "README.md": true,
+        // "LICENSE": true,
 
         // 🗑️
         "*.code-workspace": true,
@@ -30,7 +30,7 @@
         "**/.task": true,
 
         // 🎨 formatting / linting
-        "**/biome.jsonc": true,
+        // "**/biome.jsonc": true,
 
         // -----------------------
         // ===========> 🖥️ server

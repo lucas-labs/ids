@@ -5,20 +5,20 @@
 //! - **Websocket Server**: `/__ws` endpoint to send `refresh` messages to the clients, so they can
 //!   refresh the page and get the latest changes
 
-use std::{
-    net::ToSocketAddrs,
-    sync::{Arc, Mutex},
-    thread::spawn,
-};
-
-use crate::assets::resp;
+mod websocket;
 
 use {
     crate::{
-        assets::{self, RuntimeAssets},
+        assets::{self, resp, RuntimeAssets},
         Server,
     },
+    bus::Bus,
     rouille::{self, Request, Response, Server as RouilleServer},
+    std::{
+        net::ToSocketAddrs,
+        sync::{Arc, Mutex},
+        thread::spawn,
+    },
 };
 
 impl Server {
@@ -31,8 +31,9 @@ impl Server {
         let runtime_assets = self.runtime_assets.clone();
         let spa = self.cfg.spa;
         let serve_ui = self.cfg.serve_ui;
+        let bus = self.ws_bus.clone();
 
-        spawn(move || http(host, port, runtime_assets, spa, serve_ui));
+        spawn(move || http(host, port, runtime_assets, spa, serve_ui, bus));
     }
 }
 
@@ -42,6 +43,7 @@ fn http(
     runtime_assets: Arc<Mutex<RuntimeAssets>>,
     spa: bool,
     serve_ui: bool,
+    bus: Arc<Mutex<Bus<String>>>,
 ) {
     let url = format!("{}:{}", host, port);
     let prefix = {
@@ -50,6 +52,11 @@ fn http(
     };
 
     start_server(url, move |request| {
+        // if its a GET to /{prefix}/ws, serve as websocket
+        if request.method() == "GET" && request.url().starts_with(&format!("{prefix}/ws")) {
+            return websocket::handle(request, bus.clone());
+        }
+
         // if the request starts with the prefix, serve the asset from the runtime assets
         if request.url().starts_with(&prefix) {
             let runtime_assets = runtime_assets.lock();

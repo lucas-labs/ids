@@ -45,6 +45,7 @@ impl Server {
 
             // insert each of the svg files
             for (path, content) in files {
+                println!("inserting file: {}", path);
                 runtime_assets.insert(path.as_str(), content);
             }
         }

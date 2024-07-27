@@ -9,16 +9,13 @@
 //!   get the latest changes
 
 use {
-    crossbeam_channel::{unbounded, Receiver, Sender},
-    std::{path::PathBuf, thread::spawn, time::Duration},
-};
-
-use {
     crate::Server,
+    crossbeam_channel::{unbounded, Receiver, Sender},
     eyre::Result,
     lool::cli::stylize::Stylize,
     notify::{Config, RecommendedWatcher},
-    notify_debouncer_mini::{new_debouncer_opt, Config as DebouncerConfig},
+    notify_debouncer_mini::{new_debouncer_opt, Config as DebouncerConfig, DebouncedEventKind},
+    std::{path::PathBuf, thread::spawn, time::Duration},
 };
 
 impl Server {
@@ -41,6 +38,7 @@ fn watch(path: PathBuf, sender: Sender<()>) -> Result<()> {
 
     let debouncer_cfg = DebouncerConfig::default()
         .with_notify_config(watcher_cfg)
+        .with_batch_mode(true)
         .with_timeout(Duration::from_millis(100));
 
     let mut debouncer = new_debouncer_opt::<_, RecommendedWatcher>(debouncer_cfg, tx).unwrap();
@@ -53,8 +51,11 @@ fn watch(path: PathBuf, sender: Sender<()>) -> Result<()> {
                 // filter svg files only
                 if let Ok(events) = event {
                     // if any of the events is on an svg file, notify the sender
-                    if events.iter().any(|e| e.path.extension().map_or(false, |ext| ext == "svg")) {
-                        sender.send(())?;
+                    if events.iter().any(|e| {
+                        e.path.extension().map_or(false, |ext| ext == "svg")
+                            && e.kind != DebouncedEventKind::AnyContinuous
+                    }) {
+                        sender.try_send(())?;
                     }
                 }
             }

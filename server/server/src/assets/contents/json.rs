@@ -6,9 +6,10 @@
 //! server under the `_ids_runtime` prefix (`/_ids_runtime/contents.json`) and it's regenerated
 //! every time a applicable change is detected in the repository.
 
-use std::path::PathBuf;
-
-use cli::git::{GitFileStatus, GitStatus, OrganizedStatus};
+use {
+    cli::git::{GitFileStatus, GitStatus, OrganizedStatus},
+    std::path::PathBuf,
+};
 
 const NAME: &str = "contents.json";
 
@@ -22,7 +23,9 @@ pub fn generate(status: &[OrganizedStatus], link_prefix: &str) -> (String, Vec<u
         let link =
             escape_json_string(prefix.join(&file.link).display().to_string().replace('\\', "/"));
 
-        format! {r#"{{"status": "{status}","path": "{path}","link": "{link}"}}"#}
+        let timestamp = time::OffsetDateTime::now_utc().unix_timestamp_nanos();
+
+        format! {r#"{{"status": "{status}","path": "{path}","link": "{link}?{timestamp}"}}"#}
     }
 
     fn parse_organized_status(status: &OrganizedStatus, link_prefix: &str) -> String {

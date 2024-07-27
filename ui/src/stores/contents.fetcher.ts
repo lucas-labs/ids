@@ -27,7 +27,6 @@ export const [createFetcherStore, createMutatorStore] = nanoquery({
                                 (f) => f.path === file.path.replace('_light', ''),
                             );
                             if (!dark) {
-                                console.log('dark not found', file);
                                 acc.push({
                                     status: file.status,
                                     dark: file,
