@@ -19,7 +19,7 @@ debug-assertions = false
 eyre = { version = "0.6.12", default-features = false, features = [
     "auto-install",
 ] }
-lool = { git = "https://github.com/lucodear/lool", version = "0.3.2", features = [
+lool = { git = "https://github.com/lucodear/lool", version = "0.4.0", features = [
     "macros",
     "cli.stylize",
 ] }
