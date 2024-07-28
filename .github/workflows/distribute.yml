@@ -41,6 +41,8 @@ jobs:
   plan:
     name: 📋 » Create distribution plan
     runs-on: "ubuntu-20.04"
+    needs:
+      - build-ui
     outputs:
       val: ${{ steps.plan.outputs.manifest }}
       tag: ${{ github.ref_name || '' }}
