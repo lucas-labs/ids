@@ -123,10 +123,6 @@ jobs:
           name: ui-dist-${{ github.sha }}
           path: ./ui/dist
 
-      - name: 🌳 » Log File Tree
-        run: |
-          tree -a -L 10
-
       - name: 🚚 » Install cargo-dist
         run: ${{ matrix.install_dist }}
 
